@@ -2,7 +2,7 @@
 
 Strategy (measured first, in run163 Tahap 1, on the kit's dev window):
 buy an asset when its close is more than 5% below its close 24 bars ago,
-hold it for 6 bars, then sell. At most 25% of equity per asset (the
+hold it for 12 bars, then sell. At most 25% of equity per asset (the
 harness cap), at most 4 positions at once. Everything else stays in cash.
 
 Why this rule: on the dev window (136 hourly bars, 29 Oct-3 Nov 2026) the
@@ -11,8 +11,12 @@ falling), while 24-hour losers bounced: forward 6h return after a
 past-24h drop of more than 5% had median +0.85% and 72% of cases positive.
 The full replay of this rule on the dev window, with the harness's own
 execution lag (orders decided on bar k fill at bar k+1's open), fees
-(10 bps) and slippage (5 bps), gave Net PnL +415.63 USDC against
-buy-and-hold -869.34 USDC, 33 trades, max drawdown 2.36%.
+(10 bps) and slippage (5 bps), gave Net PnL +513.60 USDC against
+buy-and-hold -869.34 USDC, 31 trades, max drawdown 2.81% (grade-local,
+process driver). The 6-bar hold was tested the same way and scored
++448.63 USDC with 35 trades, so the 12-bar hold was kept; the simulator
+prediction for the 6-bar hold was +415.63 USDC, 33 trades, max drawdown
+2.36%.
 
 Honest limit, recorded with the entry: the dev profit is concentrated in
 one crash-and-bounce event (bars 24-48 of the window) and the signal did
@@ -32,7 +36,8 @@ import makefun_bars
 
 LOOKBACK = 24          # bars of past return that define a "dip"
 DROP_BPS = -500        # buy when past-24h return is below -5%
-HOLD_BARS = 6          # bars to hold after the fill bar
+HOLD_BARS = 12         # bars to hold after the fill bar (tested 6 vs 12
+# on the dev window with grade-local; 12 kept only if it grades higher)
 MAX_POSITIONS = 4      # most assets held at once
 MAX_SLIPPAGE_BPS = 10000  # wide open, like the buy-and-hold baseline: a fill
 # is never refused for the open having moved; the fill price is the
