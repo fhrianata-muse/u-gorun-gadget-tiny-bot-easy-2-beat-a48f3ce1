@@ -6,9 +6,9 @@
 
 A tiny trading bot for the make.fun bounty [Tiny Bot, Easy $2: Beat Buy-and-Hold on Solana](https://make.fun/bounty/u-gorun-gadget-tiny-bot-easy-2-beat-a48f3ce1).
 
-It buys an asset when its close is more than 5% below its close 24 hours ago, holds it for 6 hours, then sells. At most 25% of equity per asset, at most 4 positions at once, the rest stays in cash. It is fully deterministic: no clock, no environment, no randomness.
+It buys an asset when its close is more than 5% below its close 24 hours ago, holds it for 12 hours, then sells. At most 25% of equity per asset, at most 4 positions at once, the rest stays in cash. It is fully deterministic: no clock, no environment, no randomness.
 
-Measured on the kit's dev window (136 hourly bars, 29 Oct – 3 Nov 2026, with the harness's own 1-bar execution lag, 10 bps fees and 5 bps slippage), the bot scored Net PnL **+448.63 USDC** against buy-and-hold **−869.34 USDC**, 35 trades, max drawdown 2.58% (local grade, `grade-local --driver process`).
+Measured on the kit's dev window (136 hourly bars, 29 Oct – 3 Nov 2026, with the harness's own 1-bar execution lag, 10 bps fees and 5 bps slippage), the bot scored Net PnL **+513.60 USDC** against buy-and-hold **−869.34 USDC**, 31 trades, max drawdown 2.81% (local grade, `grade-local --driver process`). The 6-hour hold scored +448.63 USDC the same way and was not kept.
 
 ## Files
 
